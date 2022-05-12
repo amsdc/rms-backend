@@ -1,2 +1,2 @@
 # rms-backend
-Restaurant Management System Backend.
+RMS Backend
