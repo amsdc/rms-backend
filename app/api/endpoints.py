@@ -3,8 +3,6 @@ from flask_restful import Resource, abort
 # from app.models import Announcement, Achievement
 # from app.api.helpers import remove_html_tags
 
-
-
 class Login(Resource):
     def get(self):
         """get 
