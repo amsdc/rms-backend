@@ -32,3 +32,20 @@ class UserLists(Resource):
                                 "user_type": user_tup[3]
                             })
         return ret_list
+    
+"""
+Template
+class <<resource_name>>(Resource):
+    
+    decorators = [token_auth.login_required]
+    
+    def get(self):
+        <<your code>>
+    
+    def post(self):
+        <<your code>>
+    
+    ... for other HTTP methods
+
+NOTE: Replace things in << >> as applicable.
+"""
