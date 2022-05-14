@@ -19,7 +19,7 @@ CREATE TABLE items (
 CREATE TABLE orders (
     order_id INT  PRIMARY KEY AUTO_INCREMENT,
     user_id  INT,
-    dine_in  BOOL DEFAULT 0,
+    dine_in  BOOLEAN DEFAULT 0,
     notes    TEXT,
     CONSTRAINT FK_User_Order FOREIGN KEY (user_id)
     REFERENCES users(user_id)
@@ -33,7 +33,7 @@ CREATE TABLE orders_items (
     CONSTRAINT FK_Order_OrderItems FOREIGN KEY (order_id)
     REFERENCES orders(order_id),
     CONSTRAINT FK_Item_OrderItems FOREIGN KEY (item_id)
-    REFERENCES items(id),
+    REFERENCES items(id)
 );
 
 -- Insert sample data
