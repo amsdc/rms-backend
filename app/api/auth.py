@@ -32,9 +32,10 @@ def generate_token(user_id):
 @token_auth.verify_token
 def verify_token(token):
     try:
-        user_id = jwt.decode(token, current_app.config['SECRET_KEY'],
-        algorithms=['HS256'])["user_id"]
-        return user_id
+        jtkn = jwt.decode(token, current_app.config['SECRET_KEY'],
+        algorithms=['HS256'])
+        # print(jtkn)
+        return jtkn["user_id"]
     except:
         return None
         
