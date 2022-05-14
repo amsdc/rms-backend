@@ -2,7 +2,7 @@
 
 -- Users table
 CREATE TABLE users (
-    id        INT          PRIMARY KEY AUTO_INCREMENT,
+    user_id   INT          PRIMARY KEY AUTO_INCREMENT,
     username  VARCHAR(30)  UNIQUE NOT NULL,
     password  VARCHAR(100) NOT NULL,
     user_type VARCHAR(10)  NOT NULL
@@ -10,7 +10,7 @@ CREATE TABLE users (
 
 -- Items table
 CREATE TABLE items (
-    id        INT  PRIMARY KEY AUTO_INCREMENT,
+    item_id   INT  PRIMARY KEY AUTO_INCREMENT,
     item_name TEXT NOT NULL,
     price     INT  NOT NULL
 );
@@ -19,7 +19,7 @@ CREATE TABLE items (
 CREATE TABLE orders (
     order_id INT  PRIMARY KEY AUTO_INCREMENT,
     user_id  INT,
-    dine_in  BOOLEAN DEFAULT 0,
+    dine_in  BOOLEAN DEFAULT 1,
     notes    TEXT,
     CONSTRAINT FK_User_Order FOREIGN KEY (user_id)
     REFERENCES users(user_id)
@@ -33,7 +33,7 @@ CREATE TABLE orders_items (
     CONSTRAINT FK_Order_OrderItems FOREIGN KEY (order_id)
     REFERENCES orders(order_id),
     CONSTRAINT FK_Item_OrderItems FOREIGN KEY (item_id)
-    REFERENCES items(id)
+    REFERENCES items(item_id)
 );
 
 -- Insert sample data
