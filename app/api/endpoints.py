@@ -52,6 +52,7 @@ class Register(Resource):
         password = data["password"]
         cur = mysql.connection.cursor()
         cur.execute("INSERT INTO users (username, password, user_type) VALUES (%s, %s, 'customer')", (username, password))
+        mysql.connection.commit()
 
 """
 Template
