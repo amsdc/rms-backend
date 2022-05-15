@@ -4,8 +4,11 @@ from flask_restful import (
     reqparse
 )
 
+from werkzeug.security import generate_password_hash
+
 from app import mysql
 from app.api.auth import basic_auth, generate_token, token_auth
+
 
 # from app.models import Announcement, Achievement
 # from app.api.helpers import remove_html_tags
@@ -49,7 +52,7 @@ class Register(Resource):
     def post(self):
         data = self.reqparse.parse_args()
         username = data["username"]
-        password = data["password"]
+        password = generate_password_hash(data["password"])
         cur = mysql.connection.cursor()
         cur.execute("INSERT INTO users (username, password, user_type) VALUES (%s, %s, 'customer')", (username, password))
         mysql.connection.commit()
