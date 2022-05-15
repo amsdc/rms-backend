@@ -1,4 +1,8 @@
-from flask_restful import Resource, abort
+from flask_restful import (
+    Resource, 
+    abort, 
+    reqparse
+)
 
 from app import mysql
 from app.api.auth import basic_auth, generate_token, token_auth
@@ -32,7 +36,23 @@ class UserLists(Resource):
                                 "user_type": user_tup[3]
                             })
         return ret_list
+
+class Register(Resource):
+    def __init__(self):
+        self.reqparse = reqparse.RequestParser()
+        self.reqparse.add_argument('username', type = str, required = True,
+            help = 'No username provided', location = 'json')
+        self.reqparse.add_argument('password', type = str, required = True,
+            help = 'No password provided', location = 'json')
+        super().__init__()
     
+    def post(self):
+        data = self.reqparse.parse_args()
+        username = data["username"]
+        password = data["password"]
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO users (username, password, user_type) VALUES (%s, %s, 'customer')", (username, password))
+
 """
 Template
 class <<resource_name>>(Resource):
