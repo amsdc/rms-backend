@@ -1,3 +1,4 @@
+from flask import request
 from flask_restful import (
     Resource, 
     abort, 
@@ -56,6 +57,29 @@ class Register(Resource):
         cur = mysql.connection.cursor()
         cur.execute("INSERT INTO users (username, password, user_type) VALUES (%s, %s, 'customer')", (username, password))
         mysql.connection.commit()
+
+
+class Menu(Resource):
+    decorators = [token_auth.login_required]
+    
+    def get(self,item_id):
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM items WHERE item_id = %s",(item_id,))
+        menu_tup = cur.fetchone()
+        return ({"item_id": menu_tup[0],
+                "name": menu_tup[1],
+                "price": menu_tup[2]
+            })
+
+    def put(self,item_id):
+        data = request.get_json()
+        item_id = data['item_id']
+        name = data["name"]
+        price = data["price"]
+        cur = mysql.connection.cursor()
+        cur.execute("UPDATE items SET item_name = %s, price = %s WHERE item_id = %s", (name,price,item_id))
+        mysql.connection.commit()
+
 
 """
 Template
