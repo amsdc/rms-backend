@@ -35,7 +35,7 @@ class UserLists(Resource):
             ret_list.append({
                                 "user_id": user_tup[0],
                                 "username": user_tup[1],
-                                "password": user_tup[2],
+                                # "password": user_tup[2],
                                 "user_type": user_tup[3]
                             })
         return ret_list
