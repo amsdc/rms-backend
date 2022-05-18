@@ -36,7 +36,7 @@ class UserLists(Resource):
             ret_list.append({
                                 "user_id": user_tup[0],
                                 "username": user_tup[1],
-                                "password": user_tup[2],
+                                # "password": user_tup[2],
                                 "user_type": user_tup[3]
                             })
         return ret_list
@@ -59,9 +59,26 @@ class Register(Resource):
         mysql.connection.commit()
 
 
+class UserInfo(Resource):
+    # Advaith
+    def get(self, user_id):
+        """Get User Info"""
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT username, user_type FROM users WHERE user_id=%s LIMIT 1", (user_id,))
+        result = cur.fetchone()
+        if result:
+            return {
+                "user_id": user_id,
+                "username": result[0],
+                "user_type": result[1]
+            }
+        else:
+            abort(404)
+
+
 class Menu(Resource):
     decorators = [token_auth.login_required]
-    
+    # Nishant
     def get(self,item_id):
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM items WHERE item_id = %s",(item_id,))
@@ -79,6 +96,7 @@ class Menu(Resource):
         cur = mysql.connection.cursor()
         cur.execute("UPDATE items SET item_name = %s, price = %s WHERE item_id = %s", (name,price,item_id))
         mysql.connection.commit()
+
 
 
 """
