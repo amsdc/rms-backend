@@ -57,6 +57,22 @@ class Register(Resource):
         cur.execute("INSERT INTO users (username, password, user_type) VALUES (%s, %s, 'customer')", (username, password))
         mysql.connection.commit()
 
+class UserInfo(Resource):
+    def get(self, user_id):
+        """Get User Info"""
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT username, user_type FROM users WHERE user_id=%s LIMIT 1", (user_id,))
+        result = cur.fetchone()
+        if result:
+            return {
+                "user_id": user_id,
+                "username": result[0],
+                "user_type": result[1]
+            }
+        else:
+            abort(404)
+
+
 """
 Template
 class <<resource_name>>(Resource):
