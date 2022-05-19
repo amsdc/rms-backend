@@ -1,7 +1,8 @@
 from flask import request
+from flask import abort
 from flask_restful import (
     Resource, 
-    abort, 
+#    abort, 
     reqparse
 )
 
@@ -73,7 +74,7 @@ class UserInfo(Resource):
                 "user_type": result[1]
             }
         else:
-            abort(404)
+            abort(404, "no such user exists")
 
 
 class Menu(Resource):

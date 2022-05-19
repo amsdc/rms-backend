@@ -21,7 +21,7 @@ def verify_password(username, password):
 
 @basic_auth.error_handler
 def basic_auth_error(status):
-    abort(403)
+    abort(403, "Invalid username or password")
 
 def generate_token(user_id):
     return jwt.encode({'user_id': user_id,
@@ -42,4 +42,5 @@ def verify_token(token):
 
 @token_auth.error_handler
 def token_auth_error(status):
-    abort(401)
+    abort(401, "You have not supplied a token in the headers or"
+               " the token issued by your client is invalid.")
